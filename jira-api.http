@@ -1,0 +1,304 @@
+### Jira REST API Testing
+
+### Variables (update these for your environment)
+@baseUrl = {{JIRA_BASE}}
+@email = {{JIRA_EMAIL}}
+@token = {{JIRA_TOKEN}}
+
+@project = COM
+@issueKey = COM-123
+
+### ============================================================================
+### Authentication Tests
+### ============================================================================
+
+### 1. Test Authentication - Get Current User
+GET {{baseUrl}}/rest/api/3/myself
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### ============================================================================
+### Sprint & Issue Search
+### ============================================================================
+
+### 2. Get Current Sprint Issues (Main Query)
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND sprint in openSprints() ORDER BY status ASC, priority DESC",
+  "fields": [
+    "summary",
+    "issuetype",
+    "customfield_10015"
+  ],
+  "nextPageToken": "",
+  "maxResults": 20
+}
+
+### 3. Get All Recent Issues in Project (no sprint filter)
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} ORDER BY created DESC",
+  "maxResults": 20
+}
+
+### 4. Get Issues Assigned to Me in Active Sprint
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND assignee = currentUser() AND sprint in openSprints()",
+  "maxResults": 50
+}
+
+### 5. Get "To Do" Issues in Active Sprint
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND status = \"To Do\" AND sprint in openSprints()",
+  "maxResults": 50
+}
+
+### 6. Get High Priority Issues
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND priority = High AND sprint in openSprints()",
+  "maxResults": 50
+}
+
+### ============================================================================
+### Issue Details
+### ============================================================================
+
+### 7. Get Specific Issue Details
+GET {{baseUrl}}/rest/api/3/issue/{{issueKey}}
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 8. Get Issue with Specific Fields
+GET {{baseUrl}}/rest/api/3/issue/{{issueKey}}?fields=summary,status,assignee,priority,timespent,timeestimate,description
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### ============================================================================
+### Transitions (Status Changes)
+### ============================================================================
+
+### 9. Get Available Transitions for Issue
+GET {{baseUrl}}/rest/api/3/issue/{{issueKey}}/transitions
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 10. Transition Issue to New Status
+# Get transition ID from the response above
+POST {{baseUrl}}/rest/api/3/issue/{{issueKey}}/transitions
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+
+{
+  "transition": {
+    "id": "31"
+  }
+}
+
+### ============================================================================
+### Worklog (Time Tracking)
+### ============================================================================
+
+### 11. Add Worklog - 2 hours
+POST {{baseUrl}}/rest/api/3/issue/{{issueKey}}/worklog
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "timeSpent": "2h"
+}
+
+### 12. Add Worklog - 30 minutes
+POST {{baseUrl}}/rest/api/3/issue/{{issueKey}}/worklog
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "timeSpent": "30m"
+}
+
+### 13. Add Worklog - 1 hour 30 minutes with comment
+POST {{baseUrl}}/rest/api/3/issue/{{issueKey}}/worklog
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "timeSpent": "1h 30m",
+  "comment": {
+    "type": "doc",
+    "version": 1,
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Worked on implementing the feature"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### 14. Get Worklogs for Issue
+GET {{baseUrl}}/rest/api/3/issue/{{issueKey}}/worklog
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### ============================================================================
+### Boards & Sprints (Agile API)
+### ============================================================================
+
+### 15. Get All Boards in Project
+GET {{baseUrl}}/rest/agile/1.0/board?projectKeyOrId={{project}}
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 16. Get Active Sprints for Board
+# Replace {boardId} with actual board ID from request #15
+GET {{baseUrl}}/rest/agile/1.0/board/{boardId}/sprint?state=active
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 17. Get All Sprints for Board
+GET {{baseUrl}}/rest/agile/1.0/board/{boardId}/sprint
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 18. Get Issues in Sprint
+# Replace {sprintId} with actual sprint ID
+GET {{baseUrl}}/rest/agile/1.0/sprint/{sprintId}/issue
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### ============================================================================
+### Comments
+### ============================================================================
+
+### 19. Get Comments for Issue
+GET {{baseUrl}}/rest/api/3/issue/{{issueKey}}/comment
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 20. Add Comment to Issue
+POST {{baseUrl}}/rest/api/3/issue/{{issueKey}}/comment
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "body": {
+    "type": "doc",
+    "version": 1,
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "This is a test comment from API"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### ============================================================================
+### Project Information
+### ============================================================================
+
+### 21. Get Project Details
+GET {{baseUrl}}/rest/api/3/project/{{project}}
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 22. Get All Projects
+GET {{baseUrl}}/rest/api/3/project
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 23. Get Issue Types for Project
+GET {{baseUrl}}/rest/api/3/project/{{project}}/statuses
+Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### ============================================================================
+### Advanced Queries
+### ============================================================================
+
+### 24. Get Subtasks of Parent Issue
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "parent = {{issueKey}}",
+  "maxResults": 50
+}
+
+### 25. Get Recently Updated Issues
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND updated >= -7d ORDER BY updated DESC",
+  "maxResults": 50
+}
+
+### 26. Get Unassigned Issues in Active Sprint
+POST {{baseUrl}}/rest/api/3/search/jql
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jql": "project = {{project}} AND assignee is EMPTY AND sprint in openSprints()",
+  "maxResults": 50
+}
+
+### Get list fields
+GET {{baseUrl}}/rest/api/3/field
+Authorization: Basic {{email}}:{{token}}
+Content-Type: application/json
+Accept: application/json
+
+### Agile
+GET {{baseUrl}}/rest/agile/1.0/sprint/45/issue
+
+### ============================================================================
+### Notes:
+### - Replace {{issueKey}} with actual issue key (e.g., COM-123)
+### - Replace {boardId} and {sprintId} with actual IDs from API responses
+### - Time format: 1h, 30m, 1h 30m, 2d, 1w 2d 3h
+### - JQL documentation: https://support.atlassian.com/jira-software-cloud/docs/use-advanced-search-with-jira-query-language-jql/
+### ============================================================================
