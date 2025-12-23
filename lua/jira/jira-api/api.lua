@@ -134,10 +134,34 @@ function M.transition_issue(issue_key, transition_id, callback)
 end
 
 -- Add worklog to an issue
-function M.add_worklog(issue_key, time_spent, callback)
+function M.add_worklog(issue_key, time_spent, comment, callback)
+  -- Support previous signature: (issue_key, time_spent, callback)
+  if type(comment) == "function" then
+    callback = comment
+    comment = nil
+  end
+
   local data = {
     timeSpent = time_spent,
   }
+
+  if comment and comment ~= "" then
+    data.comment = {
+      type = "doc",
+      version = 1,
+      content = {
+        {
+          type = "paragraph",
+          content = {
+            {
+              type = "text",
+              text = comment
+            }
+          }
+        }
+      }
+    }
+  end
 
   curl_request("POST", "/rest/api/3/issue/" .. issue_key .. "/worklog", data, function(result, err)
     if err then

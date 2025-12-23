@@ -387,12 +387,19 @@ M.log_time = function()
     if value == "0" then return end
 
     local time_string = value .. "h"
-    ui.start_loading("Updating time log...")
-    jira_api.add_worklog(node.key, time_string, function()
-      vim.schedule(function()
-        ui.stop_loading()
-        vim.notify("Updated " .. node.key .. " time ", vim.log.levels.INFO)
-        M.refresh_view()
+
+    vim.ui.input({ prompt = "Comment (optional): " }, function(comment)
+      ui.start_loading("Updating time log...")
+      jira_api.add_worklog(node.key, time_string, comment, function(success, err)
+        vim.schedule(function()
+          ui.stop_loading()
+          if err then
+            vim.notify("Error logging time: " .. err, vim.log.levels.ERROR)
+            return
+          end
+          vim.notify("Updated " .. node.key .. " time ", vim.log.levels.INFO)
+          M.refresh_view()
+        end)
       end)
     end)
   end)
