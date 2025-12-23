@@ -1,6 +1,6 @@
 local M = {}
 local api = vim.api
-local state = require("jira.state")
+local state = require("jira.board.state")
 
 local function get_theme_color(groups, attr)
   for _, g in ipairs(groups) do
@@ -202,7 +202,7 @@ function M.stop_loading()
 end
 
 function M.show_issue_details_popup(node)
-  local util = require("jira.util")
+  local util = require("jira.common.util")
   local lines = {
     " " .. node.key .. ": " .. (node.summary or ""),
     " " .. string.rep("━", math.min(60, #node.key + #(node.summary or "") + 2)),

@@ -1,5 +1,5 @@
 -- api.lua: Jira REST API client using curl
-local config = require("jira.config")
+local config = require("jira.common.config")
 local M = {}
 
 -- Get environment variables
@@ -200,6 +200,46 @@ end
 -- Get statuses for a project
 function M.get_project_statuses(project, callback)
   curl_request("GET", "/rest/api/3/project/" .. project .. "/statuses", nil, callback)
+end
+
+-- Get comments for an issue
+function M.get_comments(issue_key, callback)
+  curl_request("GET", "/rest/api/3/issue/" .. issue_key .. "/comment", nil, function(result, err)
+    if err then
+      if callback then callback(nil, err) end
+      return
+    end
+    if callback then callback(result.comments or {}, nil) end
+  end)
+end
+
+-- Add comment to an issue
+function M.add_comment(issue_key, comment, callback)
+  local data = {
+    body = {
+      type = "doc",
+      version = 1,
+      content = {
+        {
+          type = "paragraph",
+          content = {
+            {
+              type = "text",
+              text = comment
+            }
+          }
+        }
+      }
+    }
+  }
+
+  curl_request("POST", "/rest/api/3/issue/" .. issue_key .. "/comment", data, function(result, err)
+    if err then
+      if callback then callback(nil, err) end
+      return
+    end
+    if callback then callback(true, nil) end
+  end)
 end
 
 return M

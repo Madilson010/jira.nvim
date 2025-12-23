@@ -1,6 +1,6 @@
-local state = require("jira.state")
-local util = require("jira.util")
-local ui = require("jira.ui")
+local state = require("jira.board.state")
+local util = require("jira.common.util")
+local ui = require("jira.common.ui")
 local api = vim.api
 
 local MAX = {
@@ -337,7 +337,7 @@ local function render_header(view)
     })
 
     -- Saved Queries List
-    local config = require("jira.config")
+    local config = require("jira.common.config")
     local queries = config.options.queries or {}
     local query_names = {}
     for name, _ in pairs(queries) do table.insert(query_names, name) end
@@ -401,7 +401,7 @@ function M.render_help(view)
   -- Calculate start row based on header size
   local query_count = 0
   if view == "JQL" then
-    local config = require("jira.config")
+    local config = require("jira.common.config")
     for _ in pairs(config.options.queries or {}) do query_count = query_count + 1 end
   end
   local start_row = (view == "JQL") and (6 + query_count) or 2
@@ -451,7 +451,7 @@ function M.render_issue_tree(issues, view, depth, row)
   if not row then
     local query_count = 0
     if view == "JQL" then
-      local config = require("jira.config")
+      local config = require("jira.common.config")
       for _ in pairs(config.options.queries or {}) do query_count = query_count + 1 end
     end
     row = (view == "JQL") and (6 + query_count) or 2

@@ -28,8 +28,6 @@ M.defaults = {
   },
   projects = {},
   queries = {
-    ["Backlog"] =
-    "project = '%s' AND (sprint is EMPTY OR sprint not in openSprints()) AND statusCategory != Done ORDER BY Rank ASC",
     ["My Tasks"] = "assignee = currentUser() AND statusCategory != Done ORDER BY updated DESC",
   }
 }
