@@ -2,7 +2,7 @@
 
 A Neovim plugin for managing JIRA tasks with a beautiful UI
 
-** Still in early development, not ready to use **
+**Still in early development, will have breaking changes**
 
 <img width="3022" height="2162" alt="image" src="https://github.com/user-attachments/assets/611cdfb4-29ed-4d59-8362-74c142e81257" />
 
@@ -27,6 +27,7 @@ require('jira').setup({
   },
 
   -- Project-specific overrides
+  -- Still think about this config, maybe not good enough
   projects = {
     ["MOBILE"] = {
       story_point_field = "customfield_12345",      -- Custom field ID for story points
