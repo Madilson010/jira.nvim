@@ -1,5 +1,7 @@
 local M = {}
 
+M.SUBCOMMANDS = {"info"}
+
 M.execute = function(args)
   local parts = {}
   for part in string.gmatch(args, "%S+") do
@@ -18,14 +20,13 @@ M.execute = function(args)
     end
 
     local issue_view = require("jira.issue")
-    
+
     local tab = "description"
     if tab_or_extra and (tab_or_extra == "comment" or tab_or_extra == "comments") then
       tab = "comments"
     end
 
     issue_view.open(key, tab)
-
   else
     -- Default: Open Board
     -- Usage: :Jira [project-key]
@@ -35,3 +36,4 @@ M.execute = function(args)
 end
 
 return M
+
