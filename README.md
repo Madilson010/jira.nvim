@@ -84,7 +84,7 @@ If you don't provide a project key, you will be prompted to enter one.
 - [x] Custom JQL & Saved Queries
 - [x] Change status
 - [x] Change assignee
-- [ ] Log time
+- [x] Log time
 - [ ] Comment
 - [ ] Update
 - [ ] Update UI when terminal size change

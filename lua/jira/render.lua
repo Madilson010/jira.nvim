@@ -388,6 +388,7 @@ function M.render_help(view)
     { k = "gx", d = "Open Task in Browser" },
     { k = "s", d = "Update Status" },
     { k = "a", d = "Change Assignee" },
+    { k = "t", d = "Add time" },
   }
 
   local lines = { "" }
