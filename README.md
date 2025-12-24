@@ -39,6 +39,12 @@ A Neovim plugin for managing JIRA tasks with a beautiful UI.
   "letieu/jira.nvim",
   opts = {
     -- Your setup options...
+    jira = {
+      base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
+      email = "your-email@example.com",           -- Your Jira email
+      token = "your-api-token",                   -- Your Jira API token
+      limit = 500,                                -- Global limit of tasks per view
+    },
   },
 }
 ```
@@ -54,7 +60,7 @@ require('jira').setup({
     base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
     email = "your-email@example.com",           -- Your Jira email
     token = "your-api-token",                   -- Your Jira API token
-    limit = 200,                                -- Global limit of tasks per view
+    limit = 500,                                -- Global limit of tasks per view
   },
 
   -- Saved JQL queries for the JQL tab
