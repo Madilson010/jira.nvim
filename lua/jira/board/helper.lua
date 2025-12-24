@@ -1,4 +1,4 @@
-local state = require('jira.board.state')
+local state = require("jira.board.state")
 
 local M = {}
 
@@ -21,3 +21,4 @@ M.get_cache_key = function(project_key, view_name)
 end
 
 return M
+-- vim: set ts=2 sts=2 sw=2 et ai si sta:

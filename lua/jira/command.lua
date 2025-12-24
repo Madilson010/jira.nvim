@@ -1,10 +1,13 @@
+---@class Jira.Command
 local M = {}
 
-M.SUBCOMMANDS = {"info"}
+---@type string[]
+M.SUBCOMMANDS = { "info" }
 
-M.execute = function(args)
+---@param args string
+function M.execute(args)
   local parts = {}
-  for part in string.gmatch(args, "%S+") do
+  for part in args:gmatch("%S+") do
     table.insert(parts, part)
   end
 
@@ -27,13 +30,14 @@ M.execute = function(args)
     end
 
     issue_view.open(key, tab)
-  else
-    -- Default: Open Board
-    -- Usage: :Jira [project-key]
-    local project_key = parts[1]
-    require("jira.board").open(project_key)
+    return
   end
+
+  -- Default: Open Board
+  -- Usage: :Jira [project-key]
+  local project_key = parts[1]
+  require("jira.board").open(project_key)
 end
 
 return M
-
+-- vim: set ts=2 sts=2 sw=2 et ai si sta:

@@ -1,3 +1,4 @@
+---@class Jira.Common.Config
 local M = {}
 
 local FALLBACKS = {
@@ -7,18 +8,16 @@ local FALLBACKS = {
   },
 }
 
----@class JiraConfig
----@field jira JiraAuthOptions
----@field projects? table<string, table> Project-specific overrides
----@field queries? table<string, string> Saved JQL queries
-
 ---@class JiraAuthOptions
 ---@field base string URL of your Jira instance (e.g. https://your-domain.atlassian.net)
 ---@field email string Your Jira email
 ---@field token string Your Jira API token
 ---@field limit? number Global limit of tasks when calling API
 
----@type JiraConfig
+---@class JiraConfig
+---@field jira JiraAuthOptions
+---@field projects? table<string, table> Project-specific overrides
+---@field queries? table<string, string> Saved JQL queries
 M.defaults = {
   jira = {
     base = "",
@@ -29,7 +28,7 @@ M.defaults = {
   projects = {},
   queries = {
     ["My Tasks"] = "assignee = currentUser() AND statusCategory != Done ORDER BY updated DESC",
-  }
+  },
 }
 
 ---@type JiraConfig
@@ -53,3 +52,4 @@ function M.get_project_config(project_key)
 end
 
 return M
+-- vim: set ts=2 sts=2 sw=2 et ai si sta:
