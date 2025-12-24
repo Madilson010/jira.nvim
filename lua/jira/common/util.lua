@@ -99,7 +99,7 @@ local function parse_adf(node)
         em = "_" .. text .. "_",
         code = "`" .. text .. "`",
         strike = "~~" .. text .. "~~",
-        link = ("[%s](%s)"):format(text, mark.attrs.href),
+        link = ("[%s](%s)"):format(text, mark.attrs and mark.attrs.href or "")
       }
 
       if vim.list_contains(vim.tbl_keys(valid_marks), mark.type) then
