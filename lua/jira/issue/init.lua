@@ -11,6 +11,9 @@ local function setup_keymaps()
   vim.keymap.set("n", "q", function()
     if state.win and vim.api.nvim_win_is_valid(state.win) then
       vim.api.nvim_win_close(state.win, true)
+      if state.prev_win and vim.api.nvim_win_is_valid(state.prev_win) then
+        vim.api.nvim_set_current_win(state.prev_win)
+      end
     end
   end, opts)
 
@@ -190,6 +193,7 @@ local M = {}
 ---@param issue_key string
 ---@param initial_tab? string
 function M.open(issue_key, initial_tab)
+  local prev_win = vim.api.nvim_get_current_win()
   ui.setup_static_highlights()
   ui.start_loading("Fetching task " .. issue_key .. "...")
 
@@ -199,6 +203,7 @@ function M.open(issue_key, initial_tab)
   state.active_tab = initial_tab or "description"
   state.buf = nil
   state.win = nil
+  state.prev_win = prev_win
 
   jira_api.get_issue(issue_key, function(issue, err)
     if err then

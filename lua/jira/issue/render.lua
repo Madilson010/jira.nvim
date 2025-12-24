@@ -108,7 +108,7 @@ function M.render_content()
     if #state.comments == 0 then
       table.insert(lines, "_No comments_")
       table.insert(lines, "")
-      table.insert(lines, "Press 'c' to add a comment.")
+      table.insert(lines, "Press 'i' to add a comment.")
     else
       for i, comment in ipairs(state.comments) do
         local comment_start_line = start_row + #lines
