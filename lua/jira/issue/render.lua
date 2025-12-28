@@ -70,6 +70,7 @@ function M.render_content()
   local fields = state.issue.fields or {}
 
   if state.active_tab == "description" then
+    table.insert(lines, "**Type**: " .. (fields.issuetype and fields.issuetype.name or "Unknown"))
     table.insert(lines, "**Status**: " .. (fields.status and fields.status.name or "Unknown"))
 
     local assignee_name = "Unassigned"
