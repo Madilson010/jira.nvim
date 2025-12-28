@@ -10,7 +10,52 @@ local state = {
   win = nil,
   project_key = nil,
   parent_key = nil,
+  valid_issue_types = {},
 }
+
+local function update_type_line(type_name)
+  if not state.buf or not vim.api.nvim_buf_is_valid(state.buf) then return end
+
+  local lines = vim.api.nvim_buf_get_lines(state.buf, 0, -1, false)
+  for i, line in ipairs(lines) do
+    if line:match("^%*%*Type%*%*:") then
+      local new_line = "**Type**: " .. type_name
+      vim.api.nvim_buf_set_lines(state.buf, i - 1, i, false, { new_line })
+
+      local ns = vim.api.nvim_create_namespace("JiraCreateTypes")
+      -- Clear existing marks for this namespace in the entire buffer
+      vim.api.nvim_buf_clear_namespace(state.buf, ns, 0, -1)
+      vim.api.nvim_buf_set_extmark(state.buf, ns, i - 1, 0, {
+        virt_text = { { "  Press <Enter> to select", "Comment" } },
+        virt_text_pos = "eol",
+      })
+      
+      vim.bo[state.buf].modified = false
+      break
+    end
+  end
+end
+
+local function select_issue_type()
+  if not state.valid_issue_types or #state.valid_issue_types == 0 then
+    vim.notify("No issue types available", vim.log.levels.WARN)
+    return
+  end
+
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local row = cursor[1] - 1
+  local line = vim.api.nvim_buf_get_lines(state.buf, row, row + 1, false)[1]
+
+  if line and line:match("^%*%*Type%*%*:") then
+    vim.ui.select(state.valid_issue_types, {
+      prompt = "Select Issue Type:",
+    }, function(choice)
+      if choice then
+        update_type_line(choice)
+      end
+    end)
+  end
+end
 
 local function render_template()
   local lines = {}
@@ -226,6 +271,52 @@ function M.open(project_key, parent_key)
       on_save()
     end,
   })
+
+  -- Keymap for selection
+  vim.keymap.set("n", "<CR>", select_issue_type, { buffer = buf, silent = true })
+
+  -- Fetch valid issue types
+  jira_api.get_create_meta(project_key, function(issue_types, err)
+    if not err and issue_types and #issue_types > 0 then
+      local valid_types = {}
+      for _, t in ipairs(issue_types) do
+        -- Filter based on context
+        if state.parent_key then
+          if t.subtask then
+            table.insert(valid_types, t.name)
+          end
+        else
+          if not t.subtask then
+            table.insert(valid_types, t.name)
+          end
+        end
+      end
+
+      state.valid_issue_types = valid_types
+
+      if #valid_types > 0 then
+        vim.schedule(function()
+          if not state.buf or not vim.api.nvim_buf_is_valid(state.buf) then
+            return
+          end
+
+          local lines = vim.api.nvim_buf_get_lines(state.buf, 0, -1, false)
+          for i, line in ipairs(lines) do
+            if line:match("^%*%*Type%*%*:") then
+              local current = common_util.strim(line:match("^%*%*Type%*%*:?%s*(.*)") or "")
+              -- Update default if it's the generic fallback
+              if current == "Task" or current == "Sub-task" then
+                update_type_line(valid_types[1])
+              else
+                update_type_line(current)
+              end
+              break
+            end
+          end
+        end)
+      end
+    end
+  end)
 end
 
 return M

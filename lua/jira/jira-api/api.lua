@@ -377,8 +377,51 @@ function M.create_issue(fields, callback)
       end
       return
     end
+
+    if result and (result.errorMessages or result.errors) then
+      local errors = {}
+      if result.errorMessages then
+        for _, msg in ipairs(result.errorMessages) do
+          table.insert(errors, msg)
+        end
+      end
+      if result.errors then
+        for k, v in pairs(result.errors) do
+          table.insert(errors, k .. ": " .. v)
+        end
+      end
+
+      if #errors > 0 then
+        if callback and vim.is_callable(callback) then
+          callback(nil, table.concat(errors, "\n"))
+        end
+        return
+      end
+    end
+
     if callback and vim.is_callable(callback) then
       callback(result, nil)
+    end
+  end)
+end
+
+-- Get create metadata (issue types) for a project
+function M.get_create_meta(project_key, callback)
+  curl_request("GET", "/rest/api/3/issue/createmeta?projectKeys=" .. project_key, nil, function(result, err)
+    if err then
+      if callback and vim.is_callable(callback) then
+        callback(nil, err)
+      end
+      return
+    end
+    if callback and vim.is_callable(callback) then
+      -- Result structure: { projects: [ { key: "PROJ", issuetypes: [ ... ] } ] }
+      local project_data = result.projects and result.projects[1]
+      if project_data then
+        callback(project_data.issuetypes, nil)
+      else
+        callback({}, nil)
+      end
     end
   end)
 end
