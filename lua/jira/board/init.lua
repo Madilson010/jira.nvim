@@ -435,7 +435,7 @@ function M.log_time()
 
   local jira_api = require("jira.jira-api.api")
 
-  vim.ui.input({ prompt = "Add time for " .. node.key .. " (h):" }, function(value)
+  vim.ui.input({ prompt = "Add time for " .. node.key .. " (e.g. 1h, 30m):" }, function(value)
     if not value then
       return
     end
@@ -447,7 +447,10 @@ function M.log_time()
       return
     end
 
-    local time_string = value .. "h"
+    local time_string = value
+    if tonumber(value) then
+      time_string = value .. "h"
+    end
 
     vim.ui.input({ prompt = "Comment (optional): " }, function(comment)
       common_ui.start_loading("Updating time log...")
