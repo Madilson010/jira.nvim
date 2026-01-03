@@ -12,9 +12,14 @@
 ### Authentication Tests
 ### ============================================================================
 
-### 1. Test Authentication - Get Current User
+### 1. Test Authentication - Get Current User (Basic Auth)
 GET {{baseUrl}}/rest/api/3/myself
 Authorization: Basic {{email}}:{{token}}
+Accept: application/json
+
+### 1b. Test Authentication - Get Current User (PAT)
+GET {{baseUrl}}/rest/api/3/myself
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ### ============================================================================

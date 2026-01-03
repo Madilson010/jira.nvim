@@ -10,8 +10,9 @@ local FALLBACKS = {
 
 ---@class JiraAuthOptions
 ---@field base string URL of your Jira instance (e.g. https://your-domain.atlassian.net)
----@field email string Your Jira email
----@field token string Your Jira API token
+---@field email? string Your Jira email (required for basic auth)
+---@field token string Your Jira API token or PAT
+---@field type? "basic"|"pat" Authentication type (default: "basic")
 ---@field limit? number Global limit of tasks when calling API
 
 ---@class JiraConfig
@@ -23,6 +24,7 @@ M.defaults = {
     base = "",
     email = "",
     token = "",
+    type = "basic",
     limit = 200,
   },
   projects = {},

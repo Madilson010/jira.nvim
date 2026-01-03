@@ -17,6 +17,7 @@ local function get_env()
   env.base = os.getenv("JIRA_BASE_URL") or config.options.jira.base
   env.email = os.getenv("JIRA_EMAIL") or config.options.jira.email
   env.token = os.getenv("JIRA_TOKEN") or config.options.jira.token
+  env.type = (os.getenv("JIRA_AUTH_TYPE") or config.options.jira.type or "basic"):lower()
   env.limit = config.options.jira.limit
 
   return env
@@ -26,7 +27,8 @@ end
 ---@return boolean valid
 local function validate_env()
   local env = get_env()
-  if not env.base or not env.email or not env.token then
+  local is_pat = env.type == "pat"
+  if not env.base or (not is_pat and not env.email) or not env.token then
     vim.notify("Missing Jira environment variables. Please check your setup.", vim.log.levels.ERROR)
     return false
   end
@@ -48,12 +50,18 @@ local function curl_request(method, endpoint, data, callback)
 
   local env = get_env()
   local url = env.base .. endpoint
-  local auth = env.email .. ":" .. env.token
 
   -- Build curl command
-  local cmd = ('curl -s -X %s -H "Content-Type: application/json" -H "Accept: application/json" -u "%s" '):format(
+  local auth_header = ""
+  if env.type == "pat" then
+    auth_header = ('-H "Authorization: Bearer %s"'):format(env.token)
+  else
+    auth_header = ('-u "%s:%s"'):format(env.email, env.token)
+  end
+
+  local cmd = ('curl -s -X %s -H "Content-Type: application/json" -H "Accept: application/json" %s '):format(
     method,
-    auth
+    auth_header
   )
 
   local temp_file = nil

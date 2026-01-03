@@ -42,9 +42,10 @@ A Neovim plugin for managing JIRA tasks with a beautiful UI.
     -- Your setup options...
     jira = {
       base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
-      email = "your-email@example.com",           -- Your Jira email
-      token = "your-api-token",                   -- Your Jira API token
-      limit = 500,                                -- Global limit of tasks per view
+      email = "your-email@example.com",           -- Your Jira email (Optional for PAT)
+      token = "your-api-token",                   -- Your Jira API token or PAT
+      type = "basic",                             -- Authentication type: "basic" (default) or "pat"
+      limit = 200,                                -- Global limit of tasks per view (default: 200)
     },
   },
 }
@@ -59,9 +60,10 @@ require('jira').setup({
   -- Jira connection settings
   jira = {
     base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
-    email = "your-email@example.com",           -- Your Jira email
-    token = "your-api-token",                   -- Your Jira API token
-    limit = 500,                                -- Global limit of tasks per view
+    email = "your-email@example.com",           -- Your Jira email (Optional for PAT)
+    token = "your-api-token",                   -- Your Jira API token or PAT
+    type = "basic",                             -- Authentication type: "basic" (default) or "pat"
+    limit = 200,                                -- Global limit of tasks per view (default: 200)
   },
 
   -- Saved JQL queries for the JQL tab
@@ -91,12 +93,14 @@ Alternatively, you can set Jira credentials using environment variables, which t
 export JIRA_BASE_URL="https://your-domain.atlassian.net"
 export JIRA_EMAIL="your-email@example.com"
 export JIRA_TOKEN="your-api-token"
+export JIRA_AUTH_TYPE="basic" # or "pat"
 ```
 
 Supported environment variables:
 - `JIRA_BASE_URL` - Base URL of your Jira instance
-- `JIRA_EMAIL` - Your Jira email
-- `JIRA_TOKEN` - Your Jira API token
+- `JIRA_EMAIL` - Your Jira email (Optional for PAT)
+- `JIRA_TOKEN` - Your Jira API token or PAT
+- `JIRA_AUTH_TYPE` - Authentication type: "basic" (default) or "pat"
 
 ---
 
